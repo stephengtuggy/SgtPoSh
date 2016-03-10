@@ -22,4 +22,10 @@ compact.exe /s:E:\ /a /i | E:\Dev\Repos\GitHub\SgtPoSh\ConvertFrom-CompactExe.ps
 } | Sort-Object CompressedLengthSum | Format-Table -Auto > E:\CompressedLengthSumByExtension.txt
 ```
 
-This groups all the files on drive E by extension, then reports the total size on disk of the files with each extension (such as .txt or .exe), in GB.
+This groups all the files on drive E by extension, then reports the total size on disk of the files with each extension (such as .txt or .exe), in GB. It sends its output to a plain-text file, E:\CompressedLengthSumByExtension.txt, which you can then view in any text editor. Or, you can run:
+
+```
+Get-Content E:\CompressedLengthSumByExtension.txt | more
+```
+
+to output the file's contents to your PowerShell window.
