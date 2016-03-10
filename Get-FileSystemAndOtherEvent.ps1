@@ -2,12 +2,13 @@
 # 
 # Return list of event log entries and file / directory creation /
 # modification events in specified time range. If no time range specified,
-# defaults are from last modification time of Asset Use spreadsheet to now.
+# defaults are from the .NET minimum DateTime value to Now (the time when the
+# script starts running).
 # 
 # Created  2008-06-23 by Stephen Tuggy
 # Split into Get-FileSystemAndOtherEvent.ps1 and Get-FileSystemAndOtherEvent-AssetUse.ps1 2011-07-04 by Stephen Tuggy
-# Modified 2016-03-09 by Stephen Tuggy
-# Version 0.2.2.0
+# Modified 2016-03-10 by Stephen Tuggy
+# Version 0.2.2.1
 # Runs with Windows PowerShell 1.0
 # 
 # The MIT License (MIT)
