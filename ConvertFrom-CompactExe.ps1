@@ -5,8 +5,8 @@
 # before compression, and size after compression.
 # 
 # Created  2008-08-23
-# Modified 2016-03-09
-# Version 0.1.3.0
+# Modified 2016-06-12
+# Version 0.2.0
 # Runs with Windows PowerShell 1.0
 # 
 # The MIT License (MIT)

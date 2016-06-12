@@ -7,8 +7,8 @@
 # 
 # Created  2008-06-23 by Stephen Tuggy
 # Split into Get-FileSystemAndOtherEvent.ps1 and Get-FileSystemAndOtherEvent-AssetUse.ps1 2011-07-04 by Stephen Tuggy
-# Modified 2016-03-10 by Stephen Tuggy
-# Version 0.2.2.1
+# Modified 2016-06-12 by Stephen Tuggy
+# Version 0.3.0
 # Runs with Windows PowerShell 1.0
 # 
 # The MIT License (MIT)

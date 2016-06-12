@@ -5,8 +5,8 @@
 # any non-matches.
 # 
 # Created  2010-06-23 by Stephen Tuggy
-# Modified 2016-03-09 by Stephen Tuggy
-# Version 0.2.2.0
+# Modified 2016-06-12 by Stephen Tuggy
+# Version 0.3.0
 # Based on existing code from "PowerShell Scratchpad.ps1"
 # Runs with Windows PowerShell 1.0
 # 
