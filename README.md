@@ -86,6 +86,9 @@ This script is useful for comparing the contents of two different directories, r
 Parameters:
 
 -PathToDelete The old backup directory, or whatever you're thinking of deleting and want to see if you can safely delete it or not.
+
 -PathToKeep The reference directory to compare against.
+
 -IgnoreTimestamp Switch parameter. Normally, MatchFilesFromTwoDirectoryTrees will treat two files as different if their timestamps are different by more than 2 seconds -- regardless of file sizes or contents. Passing -IgnoreTimestamp tells MatchFilesFromTwoDirectoryTrees to ignore the last modified times of two files in the same subdirectory, with the same name, between PathToDelete and PathToKeep; to go ahead and compare the files by file size and contents; and to treat the two files as equivalent if the file size and contents match.
+
 -OutputNonMatches Switch parameter. Normally, MatchFilesFromTwoDirectoryTrees will output only files that match between PathToDelete and PathToKeep. -OutputNonMatches inverts the logic, so that the script will only output non-matches.
