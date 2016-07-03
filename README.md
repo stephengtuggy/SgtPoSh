@@ -2,7 +2,7 @@
 A collection of several of my most useful PowerShell scripts
 
 ## ConvertFrom-CompactExe.ps1
-This script takes as input the output from compact.exe, run without /C or /U switches, which simply reports the on-disk size of each file in the set of files you specify. To run this script, pipe the output from compact.exe to ConvertFrom-CompactExe.ps1. For example: 
+This script takes as input the output from compact.exe, run without /C or /U switches, which simply reports the on-disk size of each file in the set of files you specify. To run this script, pipe the output from compact.exe to ConvertFrom-CompactExe.ps1. For example:
 
 ```
 compact.exe /s:E:\ /a /i | E:\Dev\Repos\GitHub\SgtPoSh\ConvertFrom-CompactExe.ps1
@@ -39,7 +39,7 @@ This script will gather all the Windows Event Log events and filesystem events o
 
 It is best to run this script in an Administrator instance of PowerShell, so that you can get information on as much of the local filesystem as possible. (The script will search all local drives and directories that it can access).
 
-Even when running as Administrator, you will probably see some error messages at the beginning of the output, stating that access to certain directories was denied. E.g.: 
+Even when running as Administrator, you will probably see some error messages at the beginning of the output, stating that access to certain directories was denied. E.g.:
 
 ```
 Get-ChildItem : Access to the path 'E:\System Volume Information' is denied.
@@ -78,3 +78,14 @@ Time                 EventType         Item
 ```
 
 (Specific events and filesystem paths will vary.)
+
+## MatchFilesFromTwoDirectoryTrees.ps1
+
+This script is useful for comparing the contents of two different directories, recursively. Depending on the parameters you pass in, you can see only the files that are the same, or only the files that are different, between the two locations. I find this useful when I have a directory that is an old backup copy of another directory, and I'm trying to figure out what I can delete from the backup copy.
+
+Parameters:
+
+-PathToDelete The old backup directory, or whatever you're thinking of deleting and want to see if you can safely delete it or not.
+-PathToKeep The reference directory to compare against.
+-IgnoreTimestamp Switch parameter. Normally, MatchFilesFromTwoDirectoryTrees will treat two files as different if their timestamps are different by more than 2 seconds -- regardless of file sizes or contents. Passing -IgnoreTimestamp tells MatchFilesFromTwoDirectoryTrees to ignore the last modified times of two files in the same subdirectory, with the same name, between PathToDelete and PathToKeep; to go ahead and compare the files by file size and contents; and to treat the two files as equivalent if the file size and contents match.
+-OutputNonMatches Switch parameter. Normally, MatchFilesFromTwoDirectoryTrees will output only files that match between PathToDelete and PathToKeep. -OutputNonMatches inverts the logic, so that the script will only output non-matches.
