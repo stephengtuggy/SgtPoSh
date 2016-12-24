@@ -41,10 +41,10 @@ trap [System.Exception] {
 $badServices = @(
     'DiagTrack',                                    # Connected User Experiences and Telemetry
     'diagnosticshub.standardcollector.service',     # Microsoft (R) Diagnostics Hub Standard Collector Service
-    'dmwappushservice',                             # (No further description given, but I'm pretty sure I don't want it)
+    'dmwappushservice',                             # (Based on what I've read on the Internet, this is a major part of the Windows 10 spyware infrastructure)
     'CDPSvc',                                       # Connected Devices Platform Service
     'AJRouter',                                     # AllJoyn Router Service
-    'ALG',                                          # Application Layer Gateway
+    #'ALG',                                         # Application Layer Gateway -- This apparently IS needed
     'PeerDistSvc',                                  # BranchCache
     'WerSvc',                                       # Windows Error Reporting Service
     'DcpSvc',                                       # DataCollectionPublishingService
@@ -53,6 +53,8 @@ $badServices = @(
     'DmEnrollmentSvc',                              # Device Management Enrollment Service
     'DevQueryBroker',                               # DevQuery Background Discovery Broker
     'DPS',                                          # Diagnostic Policy Service
+    'lfsvc',                                        # Geolocation Service
+    'MapsBroker',                                   # Downloaded Maps Manager
     ''
 )
 
