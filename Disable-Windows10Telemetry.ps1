@@ -8,8 +8,8 @@
 # , especially the comments by user "Wade".
 # 
 # Created  2016-08-10
-# Modified 2016-08-10
-# Version 0.1.1
+# Modified 2016-12-24
+# Version 0.2.0
 # Runs with Windows PowerShell
 # 
 # The MIT License (MIT)
@@ -34,9 +34,31 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-foreach ($svc in @("DiagTrack", "diagnosticshub.standardcollector.service", "dmwappushservice")) {
+trap [System.Exception] {
+    Write-Warning "Trapped exception: $_"
+}
+
+$badServices = @(
+    'DiagTrack',                                    # Connected User Experiences and Telemetry
+    'diagnosticshub.standardcollector.service',     # Microsoft (R) Diagnostics Hub Standard Collector Service
+    'dmwappushservice',                             # (No further description given, but I'm pretty sure I don't want it)
+    'CDPSvc',                                       # Connected Devices Platform Service
+    'AJRouter',                                     # AllJoyn Router Service
+    'ALG',                                          # Application Layer Gateway
+    'PeerDistSvc',                                  # BranchCache
+    'WerSvc',                                       # Windows Error Reporting Service
+    'DcpSvc',                                       # DataCollectionPublishingService
+    'DoSvc',                                        # Delivery Optimization
+    'DeviceAssociationService',                     # Device Association Service
+    'DmEnrollmentSvc',                              # Device Management Enrollment Service
+    'DevQueryBroker',                               # DevQuery Background Discovery Broker
+    'DPS',                                          # Diagnostic Policy Service
+    ''
+)
+
+foreach ($svc in $badServices) {
+    Get-Service $svc | Stop-Service -Force
     Get-Service $svc | Set-Service -StartupType Disabled
-    Get-Service $svc | Stop-Service
 }
 
 reg add HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection\ /v AllowTelemetry /t REG_DWORD /d 0 /f
