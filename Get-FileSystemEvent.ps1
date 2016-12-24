@@ -1,14 +1,11 @@
-# Get-FileSystemAndOtherEvent.ps1
+# Get-FileSystemEvent.ps1
 # 
-# Return list of event log entries and file / directory creation /
-# modification events in specified time range. If no time range specified,
-# defaults are from the .NET minimum DateTime value to Now (the time when the
-# script starts running).
+# Return list of file / directory creation / modification events in specified time range. If no time range specified, defaults are from the .NET minimum DateTime value to Now (the time when the script starts running).
 # 
-# Created  2008-06-23 by Stephen Tuggy
-# Split into Get-FileSystemAndOtherEvent.ps1 and Get-FileSystemAndOtherEvent-AssetUse.ps1 2011-07-04 by Stephen Tuggy
+# Created  2016-12-24 by Stephen Tuggy
+# Based on some earlier work of mine
 # Modified 2016-12-24 by Stephen Tuggy
-# Version 0.4.0
+# Version 0.1.0
 # Runs with Windows PowerShell
 # 
 # The MIT License (MIT)
@@ -36,9 +33,7 @@
 
 param ([DateTime] $StartTime = [DateTime]::MinValue, [DateTime] $EndTime = [DateTime]::Now)
 
-Set-Variable RetrieveEventsFromThisMuchEarlier -Option Constant -Value ([TimeSpan]::FromMinutes(-15))
-
-function FileSystemAndOtherEventsBetween([DateTime] $dtmStart, [DateTime] $dtmEnd) {
+function FileSystemEventsBetween([DateTime] $dtmStart, [DateTime] $dtmEnd) {
     $aPaths = @()
     (Get-PSProvider FileSystem).Drives | ForEach-Object {
         $aPaths += ,$_.Root
@@ -75,17 +70,6 @@ function FileSystemAndOtherEventsBetween([DateTime] $dtmStart, [DateTime] $dtmEn
         #    $obj
         #}
     }
-    
-    [DateTime]$dtmEarliestToRetrieve = $dtmStart.Add($RetrieveEventsFromThisMuchEarlier)
-    Get-EventLog -List | ForEach-Object {
-        Get-EventLog -LogName $_.Log -After $dtmEarliestToRetrieve -Before $dtmEnd -AsBaseObject
-    } | Where-Object {(($_.TimeGenerated -ge $dtmStart) -and ($_.TimeGenerated -le $dtmEnd)) -and ($_.Category -ne "Policy Change")} | ForEach-Object {
-        $obj = (New-Object "System.Management.Automation.PSObject")
-        Add-Member -MemberType NoteProperty -Name "Time"      -Value ($_.TimeGenerated)        -InputObject $obj
-        Add-Member -MemberType NoteProperty -Name "EventType" -Value ($_.EntryType.ToString()) -InputObject $obj
-        Add-Member -MemberType NoteProperty -Name "Item"      -Value ($_.Message)              -InputObject $obj
-        $obj
-    }
 }
 
-FileSystemAndOtherEventsBetween $StartTime $EndTime | Sort-Object Time | Format-Table -AutoSize -Wrap     # | Where-Object {!($_.EventType -match ".* Accessed")} 
+FileSystemEventsBetween $StartTime $EndTime | Sort-Object Time | Format-Table -AutoSize -Wrap     # | Where-Object {!($_.EventType -match ".* Accessed")} 
