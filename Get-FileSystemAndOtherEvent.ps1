@@ -8,7 +8,7 @@
 # Created  2008-06-23 by Stephen Tuggy
 # Split into Get-FileSystemAndOtherEvent.ps1 and Get-FileSystemAndOtherEvent-AssetUse.ps1 2011-07-04 by Stephen Tuggy
 # Modified 2016-12-24 by Stephen Tuggy
-# Version 0.4.0
+# Version 0.4.1
 # Runs with Windows PowerShell
 # 
 # The MIT License (MIT)
@@ -39,6 +39,10 @@ param ([DateTime] $StartTime = [DateTime]::MinValue, [DateTime] $EndTime = [Date
 Set-Variable RetrieveEventsFromThisMuchEarlier -Option Constant -Value ([TimeSpan]::FromMinutes(-15))
 
 function FileSystemAndOtherEventsBetween([DateTime] $dtmStart, [DateTime] $dtmEnd) {
+    trap [System.UnauthorizedAccessException] {
+        Write-Warning $_
+    }
+
     $aPaths = @()
     (Get-PSProvider FileSystem).Drives | ForEach-Object {
         $aPaths += ,$_.Root
