@@ -6,11 +6,11 @@
 # Based in part on 
 #   * http://winaero.com/blog/how-to-disable-telemetry-and-data-collection-in-windows-10/ , especially the comments by user "Wade".
 #   * http://forums.majorgeeks.com/index.php?threads/services-to-disable-or-not-to.304471/
-#   * https://hideu.wordpress.com/2015/08/13/how-to-kill-windows-10-privacy-spying-forever/ (Yes, this guy may be excessively paranoid, but I found this particular item useful)
+#   * https://hideu.wordpress.com/2015/08/13/how-to-kill-windows-10-privacy-spying-forever/ (useful syntax for modifying the registry using PowerShell cmdlets)
 # 
 # Created  2016-08-10
 # Modified 2016-12-24
-# Version 0.2.2
+# Version 0.2.3
 # Runs with Windows PowerShell
 # 
 # The MIT License (MIT)
@@ -54,7 +54,24 @@ $servicesToDisable = @(
     'BthHFSrv',                                     # Bluetooth Handsfree Service
     'bthserv',                                      # Bluetooth Support Service -- Multiple sources say to disable this
     'DsSvc',                                        # Data Sharing Service
-    ''
+    'WdiServiceHost',                               # Diagnostic Service Host
+    'WdiSystemHost',                                # Diagnostic System Host
+    'vmickvpexchange',                              # Hyper-V Data Exchange Service
+    'vmicguestinterface',                           # Hyper-V Guest Service Interface
+    'vmicshutdown',                                 # Hyper-V Guest Shutdown Service
+    'vmicheartbeat',                                # Hyper-V Heartbeat Service
+    'vmicvmsession',                                # Hyper-V PowerShell Direct Service
+    'vmicrdv',                                      # Hyper-V Remote Desktop Virtualization Service
+    'vmictimesync',                                 # Hyper-V Time Synchronization Service
+    'vmicvss',                                      # Hyper-V Volume Shadow Copy Requestor
+    'iphlpsvc',                                     # IP Helper
+    'MSiSCSI',                                      # Microsoft iSCSI Initiator Service
+    'Netlogon',                                     # ?? This was MajorGeeks' recommendation, but I'm not sure about it
+    'NcbService',                                   # Network Connection Broker
+    'PhoneSvc',                                     # Phone Service
+    'XblAuthManager',                               # Xbox Live Auth Manager
+    'XblGameSave',                                  # Xbox Live Game Save
+    'XboxNetApiSvc'                                 # Xbox Live Networking Service
 )
 
 $servicesToSetToManual = @(
@@ -62,12 +79,11 @@ $servicesToSetToManual = @(
     'AJRouter',                                     # AllJoyn Router Service
     'BITS',                                         # Background Intelligent Transfer Service
     'DmEnrollmentSvc',                              # Device Management Enrollment Service
-    'DevQueryBroker',                               # DevQuery Background Discovery Broker
-    ''
+    'DevQueryBroker'                                # DevQuery Background Discovery Broker
 )
 
 $servicesToLeaveAlone = @(
-    'DoSvc',                                        # Delivery Optimization -- Apparently this is needed after all
+    'DoSvc'                                         # Delivery Optimization -- Apparently this is needed after all
 )
 
 foreach ($svc in $servicesToDisable) {
