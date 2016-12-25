@@ -5,7 +5,7 @@
 # Created  2016-12-24 by Stephen Tuggy
 # Based on some earlier work of mine
 # Modified 2016-12-24 by Stephen Tuggy
-# Version 0.1.1
+# Version 0.1.2
 # Runs with Windows PowerShell
 # 
 # The MIT License (MIT)
@@ -33,11 +33,11 @@
 
 param ([DateTime] $StartTime = [DateTime]::MinValue, [DateTime] $EndTime = [DateTime]::Now)
 
+trap [System.UnauthorizedAccessException] {
+    Write-Warning $_
+}
+
 function FileSystemEventsBetween([DateTime] $dtmStart, [DateTime] $dtmEnd) {
-    trap [System.UnauthorizedAccessException] {
-        Write-Warning $_
-    }
-    
     $aPaths = @()
     (Get-PSProvider FileSystem).Drives | ForEach-Object {
         $aPaths += ,$_.Root
