@@ -78,7 +78,6 @@ $servicesToDisable = @(
 )
 
 $servicesToSetToManual = @(
-    'ALG',                                          # Application Layer Gateway -- This apparently IS needed
     'AJRouter',                                     # AllJoyn Router Service
     'BITS',                                         # Background Intelligent Transfer Service
     'DmEnrollmentSvc',                              # Device Management Enrollment Service
@@ -86,6 +85,7 @@ $servicesToSetToManual = @(
 )
 
 $servicesToLeaveAlone = @(
+    'ALG',                                          # Application Layer Gateway -- This apparently IS needed
     'DoSvc'                                         # Delivery Optimization -- Apparently this is needed after all
 )
 
