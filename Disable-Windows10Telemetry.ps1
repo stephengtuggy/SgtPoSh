@@ -73,7 +73,8 @@ $servicesToDisable = @(
     'PhoneSvc',                                     # Phone Service
     'XblAuthManager',                               # Xbox Live Auth Manager
     'XblGameSave',                                  # Xbox Live Game Save
-    'XboxNetApiSvc'                                 # Xbox Live Networking Service
+    'XboxNetApiSvc',                                # Xbox Live Networking Service
+    'WMPNetworkSvc'                                 # Windows Media Player Network Sharing Service
 )
 
 $servicesToSetToManual = @(
@@ -100,11 +101,29 @@ foreach ($svc2 in $servicesToSetToManual) {
 ## Scheduled Tasks
 
 $schTasksToDisable = @(
-    'DsSvcCleanup'
+    @{TaskPath = '\Microsoft\Windows\ApplicationData\';                         TaskName = 'DsSvcCleanup'},
+    @{TaskPath = '\Microsoft\Windows\Autochk\';                                 TaskName = 'Proxy'},
+    @{TaskPath = '\Microsoft\Windows\Customer Experience Improvement Program\'; TaskName = 'Consolidator'},
+    @{TaskPath = '\Microsoft\Windows\Customer Experience Improvement Program\'; TaskName = 'KernelCeipTask'},
+    @{TaskPath = '\Microsoft\Windows\Customer Experience Improvement Program\'; TaskName = 'UsbCeip'},
+    @{TaskPath = '\Microsoft\Windows\Diagnosis\';                               TaskName = 'Scheduled'},
+    @{TaskPath = '\Microsoft\Windows\DiskDiagnostic\';                          TaskName = 'Microsoft-Windows-DiskDiagnosticDataCollector'},
+    @{TaskPath = '\Microsoft\Windows\DiskDiagnostic\';                          TaskName = 'Microsoft-Windows-DiskDiagnosticResolver'},
+    @{TaskPath = '\Microsoft\Windows\DiskFootprint\';                           TaskName = 'Diagnostics'},
+    @{TaskPath = '\Microsoft\Windows\Feedback\Siuf\';                           TaskName = 'DmClient'},
+    @{TaskPath = '\Microsoft\Windows\Feedback\Siuf\';                           TaskName = 'DmClientOnScenarioDownload'},
+    @{TaskPath = '\Microsoft\Windows\Maps\';                                    TaskName = 'MapsToastTask'},
+    @{TaskPath = '\Microsoft\Windows\Maps\';                                    TaskName = 'MapsUpdateTask'},
+    @{TaskPath = '\Microsoft\Windows\UPnP\';                                    TaskName = 'UPnPHostConfig'},
+    @{TaskPath = '\Microsoft\Windows\WDI\';                                     TaskName = 'ResolutionHost'},
+    @{TaskPath = '\Microsoft\Windows\Windows Error Reporting\';                 TaskName = 'QueueReporting'},
+    @{TaskPath = '\Microsoft\Windows\Windows Media Sharing\';                   TaskName = 'UpdateLibrary'},
+    @{TaskPath = '\Microsoft\XblGameSave\';                                     TaskName = 'XblGameSaveTask'},
+    @{TaskPath = '\Microsoft\XblGameSave\';                                     TaskName = 'XblGameSaveTaskLogon'}
 )
 
 foreach ($schTask in $schTasksToDisable) {
-    Get-ScheduledTask -TaskName $schTask | Disable-ScheduledTask
+    Get-ScheduledTask -TaskPath $schTask.TaskPath -TaskName $schTask.TaskName | Disable-ScheduledTask
 }
 
 ## Registry
