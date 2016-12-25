@@ -39,6 +39,8 @@ trap [System.Exception] {
     Write-Warning "Trapped exception: $_"
 }
 
+## Windows Services
+
 $servicesToDisable = @(
     'DiagTrack',                                    # Connected User Experiences and Telemetry
     'diagnosticshub.standardcollector.service',     # Microsoft (R) Diagnostics Hub Standard Collector Service
@@ -94,6 +96,18 @@ foreach ($svc in $servicesToDisable) {
 foreach ($svc2 in $servicesToSetToManual) {
     Get-Service $svc2   | Set-Service -StartupType Manual
 }
+
+## Scheduled Tasks
+
+$schTasksToDisable = @(
+    'DsSvcCleanup'
+)
+
+foreach ($schTask in $schTasksToDisable) {
+    Get-ScheduledTask -TaskName $schTask | Disable-ScheduledTask
+}
+
+## Registry
 
 # reg add HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection\ /v AllowTelemetry /t REG_DWORD /d 0 /f
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" -Name "AllowTelemetry" -Type DWord -Value 0
