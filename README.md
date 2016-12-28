@@ -2,6 +2,7 @@
 A collection of several of my most useful PowerShell scripts
 
 ## ConvertFrom-CompactExe.ps1
+
 This script takes as input the output from compact.exe, run without /C or /U switches, which simply reports the on-disk size of each file in the set of files you specify. To run this script, pipe the output from compact.exe to ConvertFrom-CompactExe.ps1. For example:
 
 ```
@@ -31,6 +32,7 @@ Get-Content E:\CompressedLengthSumByExtension.txt | more
 to output the file's contents to your PowerShell window.
 
 ## Get-FileSystemAndOtherEvent.ps1
+
 This script will gather all the Windows Event Log events and filesystem events on your computer from a specified period of time, and output them in one long table, sorted by the time each event occurred. For instance, to list all the events that have taken place since 9:00 AM on March 10, 2016 (local time), run:
 
 ```
@@ -79,6 +81,10 @@ Time                 EventType         Item
 
 (Specific events and filesystem paths will vary.)
 
+## Get-FileSystemEvent.ps1
+
+Like Get-FileSystemAndOtherEvent.ps1, but includes only file system events, not events from the Windows Event Logs.
+
 ## MatchFilesFromTwoDirectoryTrees.ps1
 
 This script is useful for comparing the contents of two different directories, recursively. Depending on the parameters you pass in, you can see only the files that are the same, or only the files that are different, between the two locations. I find this useful when I have a directory that is an old backup copy of another directory, and I'm trying to figure out what I can delete from the backup copy.
@@ -92,3 +98,7 @@ Parameters:
 -IgnoreTimestamp Switch parameter. Normally, MatchFilesFromTwoDirectoryTrees will treat two files as different if their timestamps are different by more than 2 seconds -- regardless of file sizes or contents. Passing -IgnoreTimestamp tells MatchFilesFromTwoDirectoryTrees to ignore the last modified times of two files in the same subdirectory, with the same name, between PathToDelete and PathToKeep; to go ahead and compare the files by file size and contents; and to treat the two files as equivalent if the file size and contents match.
 
 -OutputNonMatches Switch parameter. Normally, MatchFilesFromTwoDirectoryTrees will output only files that match between PathToDelete and PathToKeep. -OutputNonMatches inverts the logic, so that the script will only output non-matches.
+
+## Disable-Windows10Telemetry.ps1
+
+This script takes several steps to disable, for privacy reasons, various telemetry components that are built into Windows 10.
