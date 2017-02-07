@@ -9,8 +9,8 @@
 #   * https://hideu.wordpress.com/2015/08/13/how-to-kill-windows-10-privacy-spying-forever/ (useful syntax for modifying the registry using PowerShell cmdlets)
 # 
 # Created  2016-08-10
-# Modified 2016-12-24
-# Version 0.2.3
+# Modified 2017-01-11
+# Version 0.3.0
 # Runs with Windows PowerShell
 # 
 # The MIT License (MIT)
@@ -119,7 +119,11 @@ $schTasksToDisable = @(
     @{TaskPath = '\Microsoft\Windows\Windows Error Reporting\';                 TaskName = 'QueueReporting'},
     @{TaskPath = '\Microsoft\Windows\Windows Media Sharing\';                   TaskName = 'UpdateLibrary'},
     @{TaskPath = '\Microsoft\XblGameSave\';                                     TaskName = 'XblGameSaveTask'},
-    @{TaskPath = '\Microsoft\XblGameSave\';                                     TaskName = 'XblGameSaveTaskLogon'}
+    @{TaskPath = '\Microsoft\XblGameSave\';                                     TaskName = 'XblGameSaveTaskLogon'},
+    @{TaskPath = '\Microsoft\Windows\AppID';                                    TaskName = 'EDP Policy Manager'},
+    @{TaskPath = '\Microsoft\Windows\AppID';                                    TaskName = 'PolicyConverter'},
+    @{TaskPath = '\Microsoft\Windows\AppID';                                    TaskName = 'SmartScreenSpecific'},
+    @{TaskPath = '\Microsoft\Windows\AppID';                                    TaskName = 'VerifiedPublisherCertStoreCheck'}
 )
 
 foreach ($schTask in $schTasksToDisable) {
