@@ -101,4 +101,8 @@ Parameters:
 
 ## Disable-Windows10Telemetry.ps1
 
-This script takes several steps to disable, for privacy reasons, various telemetry components that are built into Windows 10.
+This script takes several steps to disable, for privacy reasons, various telemetry components that are built into Windows 10. Note that it doesn't disable **all** of them; that is virtually impossible.
+
+## Compare-DirectoryContent.ps1
+
+This script is MatchFilesFromTwoDirectoryTrees, adapted to fit PowerShell conventions better. Compare-DirectoryContent.ps1 has largely the same arguments as Compare-Object, and works largely the same way.
