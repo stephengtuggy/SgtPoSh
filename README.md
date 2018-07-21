@@ -31,6 +31,12 @@ Get-Content E:\CompressedLengthSumByExtension.txt | more
 
 to output the file's contents to your PowerShell window.
 
+## Measure-ChildDirectorySizeOnDisk.ps1
+
+For each directory that is an immediate child of the current directory, lists the total size on disk of that subdirectory and everything in it. This calculation takes into account what files and directories might be compressed, etc.
+
+Just run this script in the appropriate parent directory, with no arguments. Make sure you are running as Administrator if you want to see the most accurate results for all subdirectories.
+
 ## Get-FileSystemAndOtherEvent.ps1
 
 This script will gather all the Windows Event Log events and filesystem events on your computer from a specified period of time, and output them in one long table, sorted by the time each event occurred. For instance, to list all the events that have taken place since 9:00 AM on March 10, 2016 (local time), run:
