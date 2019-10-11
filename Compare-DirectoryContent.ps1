@@ -4,8 +4,8 @@
 # subdirectories.
 # 
 # Created  2016-12-27 by Stephen Tuggy
-# Modified 2016-12-27 by Stephen Tuggy
-# Version 0.4.0
+# Modified 2019-10-10 by Stephen Tuggy
+# Version 0.5.0
 # Based on prior work
 # Runs with Windows PowerShell
 # 
@@ -60,10 +60,10 @@ function GetRelativePath([String]$fullPath, [String]$basePath) {
 function Get-DirectoryContent([String]$path) {
     [String]$resolvedPath = Resolve-Path $path
     if ($IgnoreTimestamp) {
-        Get-ChildItem -LiteralPath $path -Recurse -Force | Where-Object {$_ -is [System.IO.FileInfo]} | Select-Object Length, @{Name='RelativePath'; Expression={GetRelativePath $_.FullName $resolvedPath}}, @{Name='Checksum'; Expression={GetFileChecksum $_}}
+        Get-ChildItem -LiteralPath $path -Recurse -Force | Where-Object {$_ -is [System.IO.FileInfo]} | Select-Object Length, @{Name='RelativePath'; Expression={GetRelativePath $_.FullName $resolvedPath}}, @{Name='Checksum'; Expression={GetFileChecksum $_}} | Sort-Object RelativePath
     }
     else {
-        Get-ChildItem -LiteralPath $path -Recurse -Force | Where-Object {$_ -is [System.IO.FileInfo]} | Select-Object Length, LastWriteTimeUtc, @{Name='RelativePath'; Expression={GetRelativePath $_.FullName $resolvedPath}}, @{Name='Checksum'; Expression={GetFileChecksum $_}}
+        Get-ChildItem -LiteralPath $path -Recurse -Force | Where-Object {$_ -is [System.IO.FileInfo]} | Select-Object Length, LastWriteTimeUtc, @{Name='RelativePath'; Expression={GetRelativePath $_.FullName $resolvedPath}}, @{Name='Checksum'; Expression={GetFileChecksum $_}} | Sort-Object RelativePath
     }
 }
 
