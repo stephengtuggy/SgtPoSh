@@ -5,14 +5,12 @@
 # This calculation takes into account what files and directories might be compressed,
 # etc.
 # 
-# Created  2018-07-21
-# Modified 2018-07-21
-# Version 0.3.0
+# Version 0.3.1
 # Runs with Windows PowerShell
 # 
 # The MIT License (MIT)
 # 
-# Copyright (c) 2018 Stephen G Tuggy
+# Copyright (c) 2018-2026 Stephen G. Tuggy
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -89,7 +87,7 @@ filter ConvertFromCompactExe {
     }
 }
 
-Get-ChildItem -Force | Where-Object {$_.PSIsContainer} | ForEach-Object {
+Get-ChildItem -Force -Directory | ForEach-Object {
              $objOut2     = New-Object "System.Management.Automation.PSObject"
     [String] $strFullName = $_.FullName
     Add-Member -InputObject $objOut2 -MemberType NoteProperty -Name "FullName"        -Value $strFullName

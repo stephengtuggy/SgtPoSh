@@ -4,15 +4,13 @@
 # subdirectories. Can be configured either to output all matches or to output
 # any non-matches.
 # 
-# Created  2010-06-23 by Stephen Tuggy
-# Modified 2016-06-12 by Stephen Tuggy
-# Version 0.3.0
+# Version 0.3.1
 # Based on existing code from "PowerShell Scratchpad.ps1"
 # Runs with Windows PowerShell 1.0
 # 
 # The MIT License (MIT)
 # 
-# Copyright (c) 2016 Stephen G Tuggy
+# Copyright (c) 2010-2026 Stephen G. Tuggy
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -39,14 +37,7 @@ New-Variable -Name "tmscFileTimeMargin" -Value ([TimeSpan] "00:00:02") -Option C
 
 # Retrieves MD5 checksum for given file. Assumes file exists.
 function GetFileChecksum([System.IO.FileInfo] $fil) {
-    [System.IO.FileStream] $fs = $fil.OpenRead()
-    [System.Security.Cryptography.MD5] $md5calc = [System.Security.Cryptography.MD5]::Create()
-    [Byte[]] $abytResult = $md5calc.ComputeHash($fs)
-    $fs.Close()
-    foreach ($byt in $abytResult) {
-        $strResult += $byt.ToString("x2").ToLower()
-    }
-    $strResult
+    Get-FileHash -LiteralPath "$fil.FullName" -Algorithm SHA256 | Select-Object Hash
 }
 
 # Compares two files by size, date last modified, and contents. Assumes both 
@@ -96,4 +87,4 @@ filter MatchFilesFromTwoDirectoryTrees ([String] $strPathToDelete, [String] $str
     }
 }
 
-Get-ChildItem $PathToDelete -Recurse -Force | Where-Object {$_ -is [System.IO.FileInfo]} | MatchFilesFromTwoDirectoryTrees $PathToDelete $PathToKeep $IgnoreTimestamp $OutputNonMatches | ForEach-Object {[System.IO.Path]::Combine($PathToDelete, $_)}
+Get-ChildItem $PathToDelete -Recurse -Force -File | MatchFilesFromTwoDirectoryTrees $PathToDelete $PathToKeep $IgnoreTimestamp $OutputNonMatches | ForEach-Object {[System.IO.Path]::Combine($PathToDelete, $_)}
