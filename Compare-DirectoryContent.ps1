@@ -3,15 +3,13 @@
 # Compares files by checksum from two specified directories, including their
 # subdirectories.
 # 
-# Created  2016-12-27 by Stephen Tuggy
-# Modified 2019-10-10 by Stephen Tuggy
-# Version 0.5.0
+# Version 0.5.1
 # Based on prior work
 # Runs with Windows PowerShell
 # 
 # The MIT License (MIT)
 # 
-# Copyright (c) 2016 Stephen G Tuggy
+# Copyright (c) 2016-2026 Stephen G. Tuggy
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -35,14 +33,7 @@ param ([String]$ReferencePath, [String]$DifferencePath, [Switch]$ExcludeDifferen
 
 # Retrieves checksum for given file. Assumes file exists.
 function GetFileChecksum([System.IO.FileInfo]$fil) {
-    [System.IO.FileStream] $fs = $fil.OpenRead()
-    [System.Security.Cryptography.HashAlgorithm] $hashCalc = [System.Security.Cryptography.SHA256]::Create()
-    [Byte[]] $abytResult = $hashCalc.ComputeHash($fs)
-    $fs.Close()
-    foreach ($byt in $abytResult) {
-        $strResult += $byt.ToString('x2').ToLower()
-    }
-    return $strResult
+    Get-FileHash -LiteralPath "$fil.FullName" -Algorithm SHA256 | Select-Object Hash
 }
 
 function GetRelativePath([String]$fullPath, [String]$basePath) {
@@ -60,10 +51,10 @@ function GetRelativePath([String]$fullPath, [String]$basePath) {
 function Get-DirectoryContent([String]$path) {
     [String]$resolvedPath = Resolve-Path $path
     if ($IgnoreTimestamp) {
-        Get-ChildItem -LiteralPath $path -Recurse -Force | Where-Object {$_ -is [System.IO.FileInfo]} | Select-Object Length, @{Name='RelativePath'; Expression={GetRelativePath $_.FullName $resolvedPath}}, @{Name='Checksum'; Expression={GetFileChecksum $_}} | Sort-Object RelativePath
+        Get-ChildItem -LiteralPath $path -Recurse -Force -File | Select-Object Length, @{Name='RelativePath'; Expression={GetRelativePath $_.FullName $resolvedPath}}, @{Name='Checksum'; Expression={GetFileChecksum $_}} | Sort-Object RelativePath
     }
     else {
-        Get-ChildItem -LiteralPath $path -Recurse -Force | Where-Object {$_ -is [System.IO.FileInfo]} | Select-Object Length, LastWriteTimeUtc, @{Name='RelativePath'; Expression={GetRelativePath $_.FullName $resolvedPath}}, @{Name='Checksum'; Expression={GetFileChecksum $_}} | Sort-Object RelativePath
+        Get-ChildItem -LiteralPath $path -Recurse -Force -File | Select-Object Length, LastWriteTimeUtc, @{Name='RelativePath'; Expression={GetRelativePath $_.FullName $resolvedPath}}, @{Name='Checksum'; Expression={GetFileChecksum $_}} | Sort-Object RelativePath
     }
 }
 

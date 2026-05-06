@@ -5,15 +5,16 @@
 # defaults are from the .NET minimum DateTime value to Now (the time when the
 # script starts running).
 # 
-# Created  2008-06-23 by Stephen Tuggy
-# Split into Get-FileSystemAndOtherEvent.ps1 and Get-FileSystemAndOtherEvent-AssetUse.ps1 2011-07-04 by Stephen Tuggy
-# Modified 2016-12-24 by Stephen Tuggy
-# Version 0.4.1
+# Created  2008-06-23 by Stephen G. Tuggy
+# Split into Get-FileSystemAndOtherEvent.ps1 and Get-FileSystemAndOtherEvent-AssetUse.ps1 2011-07-04 by Stephen G. Tuggy
+# Modified 2016-12-24 by Stephen G. Tuggy
+# Modified 2026-05-06
+# Version 0.4.2
 # Runs with Windows PowerShell
 # 
 # The MIT License (MIT)
 # 
-# Copyright (c) 2016 Stephen G Tuggy
+# Copyright (c) 2008-2026 Stephen G. Tuggy
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal

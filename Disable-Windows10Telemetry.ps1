@@ -1,21 +1,19 @@
 # Disable-Windows10Telemetry.ps1
 # 
 # Takes several steps to disable, for privacy reasons, various telemetry 
-# components that are built into Windows 10.
+# and related components that are built into Windows 10 and 11.
 # 
 # Based in part on 
 #   * http://winaero.com/blog/how-to-disable-telemetry-and-data-collection-in-windows-10/ , especially the comments by user "Wade".
 #   * http://forums.majorgeeks.com/index.php?threads/services-to-disable-or-not-to.304471/
 #   * https://hideu.wordpress.com/2015/08/13/how-to-kill-windows-10-privacy-spying-forever/ (useful syntax for modifying the registry using PowerShell cmdlets)
 # 
-# Created  2016-08-10
-# Modified 2017-01-11
-# Version 0.3.0
+# Version 0.3.1
 # Runs with Windows PowerShell
 # 
 # The MIT License (MIT)
 # 
-# Copyright (c) 2016 Stephen G Tuggy
+# Copyright (c) 2016-2026 Stephen G. Tuggy
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -58,14 +56,6 @@ $servicesToDisable = @(
     'DsSvc',                                        # Data Sharing Service
     'WdiServiceHost',                               # Diagnostic Service Host
     'WdiSystemHost',                                # Diagnostic System Host
-    'vmickvpexchange',                              # Hyper-V Data Exchange Service
-    'vmicguestinterface',                           # Hyper-V Guest Service Interface
-    'vmicshutdown',                                 # Hyper-V Guest Shutdown Service
-    'vmicheartbeat',                                # Hyper-V Heartbeat Service
-    'vmicvmsession',                                # Hyper-V PowerShell Direct Service
-    'vmicrdv',                                      # Hyper-V Remote Desktop Virtualization Service
-    'vmictimesync',                                 # Hyper-V Time Synchronization Service
-    'vmicvss',                                      # Hyper-V Volume Shadow Copy Requestor
     'iphlpsvc',                                     # IP Helper
     'MSiSCSI',                                      # Microsoft iSCSI Initiator Service
     'Netlogon',                                     # ?? This was MajorGeeks' recommendation, but I'm not sure about it
@@ -86,7 +76,15 @@ $servicesToSetToManual = @(
 
 $servicesToLeaveAlone = @(
     'ALG',                                          # Application Layer Gateway -- This apparently IS needed
-    'DoSvc'                                         # Delivery Optimization -- Apparently this is needed after all
+    'DoSvc',                                        # Delivery Optimization -- Apparently this is needed after all
+    'vmickvpexchange',                              # Hyper-V Data Exchange Service
+    'vmicguestinterface',                           # Hyper-V Guest Service Interface
+    'vmicshutdown',                                 # Hyper-V Guest Shutdown Service
+    'vmicheartbeat',                                # Hyper-V Heartbeat Service
+    'vmicvmsession',                                # Hyper-V PowerShell Direct Service
+    'vmicrdv',                                      # Hyper-V Remote Desktop Virtualization Service
+    'vmictimesync',                                 # Hyper-V Time Synchronization Service
+    'vmicvss',                                      # Hyper-V Volume Shadow Copy Requestor
 )
 
 foreach ($svc in $servicesToDisable) {
@@ -134,3 +132,5 @@ foreach ($schTask in $schTasksToDisable) {
 
 # reg add HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection\ /v AllowTelemetry /t REG_DWORD /d 0 /f
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" -Name "AllowTelemetry" -Type DWord -Value 0
+# From https://learn.microsoft.com/en-us/troubleshoot/windows-server/networking/disable-http-proxy-auth-features#how-to-disable-wpad
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings\WinHttp" -Name "DisableWpad" -Type DWord -Value 1

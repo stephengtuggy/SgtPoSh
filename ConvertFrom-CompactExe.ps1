@@ -4,14 +4,12 @@
 # a series of custom PSObjects, each including a file's full name, size
 # before compression, and size after compression.
 # 
-# Created  2008-08-23
-# Modified 2016-06-12
-# Version 0.2.0
+# Version 0.2.1
 # Runs with Windows PowerShell 1.0
 # 
 # The MIT License (MIT)
 # 
-# Copyright (c) 2016 Stephen G Tuggy
+# Copyright (c) 2008-2026 Stephen G. Tuggy
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal

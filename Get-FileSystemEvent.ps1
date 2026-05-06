@@ -2,15 +2,13 @@
 # 
 # Return list of file / directory creation / modification events in specified time range. If no time range specified, defaults are from the .NET minimum DateTime value to Now (the time when the script starts running).
 # 
-# Created  2016-12-24 by Stephen Tuggy
 # Based on some earlier work of mine
-# Modified 2016-12-24 by Stephen Tuggy
-# Version 0.1.2
+# Version 0.1.3
 # Runs with Windows PowerShell
 # 
 # The MIT License (MIT)
 # 
-# Copyright (c) 2016 Stephen G Tuggy
+# Copyright (c) 2016-2026 Stephen G. Tuggy
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
